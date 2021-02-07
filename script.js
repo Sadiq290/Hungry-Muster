@@ -5,27 +5,33 @@ button.addEventListener('click', function () {
     fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${meal.value}`)
         .then(res => res.json())
         .then(data => {
+            const data_meals = data.meals;
+            const match = document.getElementById('match');
             let html = " ";
-            for (let index = 0; index < data.meals.length; index++) {
-                const element = data.meals[index].strMealThumb;
-                const name = data.meals[index].strMeal;
-                const id = data.meals[index].idMeal;
+
+            if (data_meals){
                 const div = document.getElementById('div');
-                div.className = "image_div";
-                html += `
-                               <div onclick ="mealDetailCall('${id}')" class="col-md-3">
+                data_meals.forEach(data_meals => {
+                    const id = data_meals.idMeal;
+                    const picture = data_meals.strMealThumb;
+                    html += `
+                               <div onclick ="mealDetailCall('${id}')">
                                    <div class="card mb-5 " style="width: 15rem;height:350px">
-                                      <img src=${element} class="card-img-top" alt="...">
-                                        <div class="card-body" style="background-color: white">
-                                           <p class="card-text text-center" style="color:red;font-weight:600;">${name}</p>
+                                      <img src=${picture} class="card-img-top" alt="...">
+                                        <div class="card-body">
+                                           <p class="card-text text-center" style="color:red;font-weight:600;">${data_meals.strMeal}</p>
                                         </div>
                                     </div>
                                 </div>`
-
+                    div.innerHTML = html;
+                });
+            }
+            else{
+                alert("Don't Match Result");
             }
 
-            div.innerHTML = html;
         })
+
 });
 const mealDetailCall = id => {
     fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`)
@@ -34,7 +40,7 @@ const mealDetailCall = id => {
 }
 function mealDetail(data) {
     const detail = document.getElementById('div_detail');
-    // console.log(data.meals[0].strMealThumb);
+    console.log(data.meals[0]);
     const ingredient = data.meals[0];
     html_2 = ""
     html_2 +=

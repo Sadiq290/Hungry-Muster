@@ -21,6 +21,10 @@ html{
     background-color: rgb(206, 206, 42);
 }
 section{
-    background-color:rgb(206, 206, 42) ;
-  
+    background-color:rgb(206, 206, 42) ; 
+}
+.box{
+     /* display: grid; */
+     /* background-color: rgb(206, 206, 42) */
+     /* justify-content: center; */
 }
