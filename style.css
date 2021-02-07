@@ -1,0 +1,18 @@
+.image_div{
+     /* padding: 12px 10px 12px 20px ; */
+     /* border: 2px solid salmon; */
+     
+}
+.image{
+    display: flex;
+    padding: 10px 10px;
+    width: 270px;   
+    border-radius: 5%;
+}
+#thumbnail{
+    display: grid;
+    /* display: none; */
+    grid-template-columns:repeat(4,1fr);
+    justify-content:center;
+    grid-gap:25px 0px;
+}

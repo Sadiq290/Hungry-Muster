@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+
+<body>
+    <section class="container">
+        <form class="col-md-6 m-auto py-5">
+            <div class="input-group mb-3">
+                <input id="input" type="text" class="form-control" placeholder="Search For Meal">
+                <div class="input-group-append">
+                    <button id="button" type="button" class="btn btn-success">Search</button>
+                </div>
+            </div>
+        </form>
+    </section>
+    <section id="thumbnail" class="mx-5">
+
+    </section>
+    <script>
+        const thumbnail = document.getElementById('thumbnail')
+        const button = document.getElementById('button');
+        button.addEventListener('click', function () {
+            const meal = document.getElementById('input').value;
+            // thumbnail.style.display ="block";
+            fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${meal}`)
+                .then(res => res.json())
+                .then(data => {
+                    for (let index = 0; index < data.meals.length; index++) {
+                        const element = data.meals[index].strMealThumb;
+                        console.log(element);
+                        const div = document.createElement('div');
+                        div.className = "image_div";
+                        const child = `<img class="image" src = ${element}>`;
+                        
+                        div.innerHTML = child ;
+                        thumbnail.appendChild(div);
+
+                    }
+                })
+
+        })
+
+
+
+    </script>
+</body>
+
+</html>
