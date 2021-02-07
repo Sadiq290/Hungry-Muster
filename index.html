@@ -21,29 +21,41 @@
             </div>
         </form>
     </section>
-    <section id="thumbnail" class="mx-5">
+    <section class="container-fluid" style="padding-right: 20px;">
+        <section id="thumbnail">
 
+        </section>
     </section>
     <script>
         const thumbnail = document.getElementById('thumbnail')
         const button = document.getElementById('button');
         button.addEventListener('click', function () {
+            // thumbnail.style.display ="none";
             const meal = document.getElementById('input').value;
-            // thumbnail.style.display ="block";
             fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${meal}`)
                 .then(res => res.json())
                 .then(data => {
                     for (let index = 0; index < data.meals.length; index++) {
                         const element = data.meals[index].strMealThumb;
-                        console.log(element);
+                        const name = data.meals[index].strMeal;
+                        console.log(data);
                         const div = document.createElement('div');
                         div.className = "image_div";
-                        const child = `<img class="image" src = ${element}>`;
-                        
-                        div.innerHTML = child ;
-                        thumbnail.appendChild(div);
+                        const child =
+                            `<div class="col-md-3">
+                        <div class="card " style="width: 18rem;">
+                           <img src=${element} class="card-img-top" alt="...">
+                            <div class="card-body" style="background-color: rgb(211, 205, 205)">
+                                <p class="card-text text-center"style ="color:red">${name}</p>
+                            </div>
+                        </div>
+                        </div>`;
 
+                        div.innerHTML = child;
+                        thumbnail.appendChild(div);
+                        // thumbnail.style.display ="block";
                     }
+                    
                 })
 
         })
