@@ -21,19 +21,23 @@
             </div>
         </form>
     </section>
+    <section id=" meal-detail ">
+        <div id="div_detail">
+
+        </div>
+    </section>
     <section class="container-fluid" style="padding-right: 20px;">
         <section id="thumbnail">
-            <div id = "div">
+            <div id="div">
 
             </div>
         </section>
     </section>
     <script>
+        const meal = document.getElementById('input');
         const button = document.getElementById('button');
         button.addEventListener('click', function () {
             const thumbnail = document.getElementById('thumbnail')
-            // thumbnail.style.display ="none";
-            const meal = document.getElementById('input');
             fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${meal.value}`)
                 .then(res => res.json())
                 .then(data => {
@@ -41,10 +45,11 @@
                     for (let index = 0; index < data.meals.length; index++) {
                         const element = data.meals[index].strMealThumb;
                         const name = data.meals[index].strMeal;
+                        const id = data.meals[index].idMeal;
                         const div = document.getElementById('div');
                         div.className = "image_div";
                         html += `
-                               <div class="col-md-3">
+                               <div onclick ="mealDetailCall('${id}')" class="col-md-3">
                                    <div class="card " style="width: 18rem;">
                                       <img src=${element} class="card-img-top" alt="...">
                                         <div class="card-body" style="background-color: rgb(211, 205, 205)">
@@ -58,7 +63,25 @@
                     div.innerHTML = html;
                 })
         });
-
+        const mealDetailCall = id => {
+            fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`)
+                .then(res => res.json())
+                .then(data => mealDetail(data))
+        }
+        function mealDetail(data) {
+            const detail = document.getElementById('div_detail');
+            // console.log(data);
+            // console.log(data.meals[0].strMealThumb);
+            html_2 = ""
+            html_2 +=
+                `<div class="card" style="width: 18rem;">
+                   <img src="${data.meals[0].strMealThumb}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    </div>
+                </div>`
+            detail.innerHTML = html_2;
+        }
 
 
     </script>

@@ -1,8 +1,10 @@
-
 #div{
     display: grid;
     grid-template-columns:repeat(4,1fr);
     justify-content:center;
     grid-gap:25px 0px;
     /* color:; */
+}
+#div_detail img{
+      height:200px;
 }
